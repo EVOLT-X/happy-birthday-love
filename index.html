@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Happy Birthday My Love 🎀</title>
 
+  <!-- FONT -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
@@ -24,6 +25,8 @@
       color:#5c3a4a;
     }
 
+    /* HEARTS */
+
     .heart{
       position:fixed;
       bottom:-20px;
@@ -31,6 +34,7 @@
       animation:floatUp linear infinite;
       z-index:0;
       opacity:0.7;
+      pointer-events:none;
     }
 
     @keyframes floatUp{
@@ -38,14 +42,18 @@
         transform:translateY(0) rotate(0deg);
         opacity:0;
       }
+
       20%{
         opacity:1;
       }
+
       100%{
         transform:translateY(-120vh) rotate(360deg);
         opacity:0;
       }
     }
+
+    /* HERO */
 
     .hero{
       height:100vh;
@@ -90,6 +98,8 @@
       background:#ff5fa2;
     }
 
+    /* SECTION */
+
     section{
       padding:100px 10%;
       position:relative;
@@ -104,6 +114,8 @@
       font-family:'Dancing Script', cursive;
     }
 
+    /* TYPING */
+
     .typing-box{
       background:white;
       padding:40px;
@@ -113,6 +125,8 @@
       line-height:40px;
       text-align:center;
     }
+
+    /* GALLERY */
 
     .gallery{
       display:grid;
@@ -145,6 +159,8 @@
       margin-top:10px;
     }
 
+    /* LETTER */
+
     .letter{
       background:white;
       padding:50px;
@@ -153,6 +169,8 @@
       font-size:20px;
       box-shadow:0 10px 30px rgba(0,0,0,0.08);
     }
+
+    /* SURPRISE */
 
     .surprise{
       text-align:center;
@@ -171,10 +189,13 @@
       0%{
         transform:scale(0);
       }
+
       100%{
         transform:scale(1);
       }
     }
+
+    /* FOOTER */
 
     footer{
       text-align:center;
@@ -182,6 +203,8 @@
       font-size:18px;
       color:#8b5d6e;
     }
+
+    /* RESPONSIVE */
 
     @media(max-width:768px){
 
@@ -210,31 +233,9 @@
 <body>
 
   <!-- MUSIC -->
-  <audio id="bgMusic" loop>
+  <audio id="bgMusic" loop controls hidden>
     <source src="shape of my heart.mp3" type="audio/mp3">
   </audio>
-
-  <!-- FLOATING HEARTS -->
-  <script>
-
-    for(let i=0; i<40; i++){
-
-      const heart = document.createElement('div');
-
-      heart.classList.add('heart');
-
-      heart.innerHTML = '❤';
-
-      heart.style.left = Math.random()*100 + 'vw';
-
-      heart.style.fontSize = Math.random()*25 + 15 + 'px';
-
-      heart.style.animationDuration = Math.random()*5 + 5 + 's';
-
-      document.body.appendChild(heart);
-    }
-
-  </script>
 
   <!-- HERO -->
   <section class="hero">
@@ -305,12 +306,13 @@
       semua hal baik datang ke hidup kamu.
       Semoga kamu selalu bahagia,
       sehat terus, diberi banyak rezeki,
-      dan semua impian kamu bisa tercapai. 🌷 <br><br>
+      dan semua impian kamu bisa tercapai 🌷 <br><br>
 
       Semoga semua usaha yang kamu lakukan merupakan potongan potongan kunci untuk mencapai hidup yang kita mimpikan.
       Aamiin yaa robbal alamiin 💕 <br><br>
 
-      I love you soo much. My love is eternal for you 💖
+      I love you soo much.
+      My love is eternal for you 💖
 
     </div>
 
@@ -339,7 +341,27 @@
   <!-- SCRIPT -->
   <script>
 
+    // FLOATING HEARTS
+
+    for(let i = 0; i < 40; i++){
+
+      const heart = document.createElement('div');
+
+      heart.classList.add('heart');
+
+      heart.innerHTML = '❤';
+
+      heart.style.left = Math.random() * 100 + 'vw';
+
+      heart.style.fontSize = Math.random() * 25 + 15 + 'px';
+
+      heart.style.animationDuration = Math.random() * 5 + 5 + 's';
+
+      document.body.appendChild(heart);
+    }
+
     // SCROLL
+
     function scrollToSection(){
 
       document.getElementById('typing').scrollIntoView({
@@ -349,12 +371,13 @@
     }
 
     // TYPING EFFECT
+
     const message = [
       "hai bocil kesayanganku 💗",
       "ciekkk ciekkk udah ultah yang ke 17 🎂",
       "selamat ulang tahun sayangnya aku",
       "terima kasih sudah hadir di hidup aku 🌷",
-      "And once again",
+      "And once again...",
       "Happy Birthday My Love 🎀"
     ];
 
@@ -392,20 +415,21 @@
     typeEffect();
 
     // SURPRISE
+
     function showLove(){
 
       document.getElementById("loveMessage").style.display = "block";
 
-      for(let i=0; i<80; i++){
+      for(let i = 0; i < 80; i++){
 
         let confetti = document.createElement("div");
 
         confetti.innerHTML = "🎀";
 
         confetti.style.position = "fixed";
-        confetti.style.left = Math.random()*100 + "vw";
+        confetti.style.left = Math.random() * 100 + "vw";
         confetti.style.top = "-20px";
-        confetti.style.fontSize = Math.random()*20 + 15 + "px";
+        confetti.style.fontSize = Math.random() * 20 + 15 + "px";
         confetti.style.animation = "fall 4s linear forwards";
 
         document.body.appendChild(confetti);
@@ -417,6 +441,7 @@
     }
 
     // CONFETTI ANIMATION
+
     const style = document.createElement('style');
 
     style.innerHTML = `
@@ -430,14 +455,21 @@
 
     document.head.appendChild(style);
 
-    // MUSIC PLAY
+    // MUSIC
+
     const music = document.getElementById("bgMusic");
 
-    document.body.addEventListener("click", () => {
+    window.addEventListener("load", () => {
 
-      music.play();
+      document.body.addEventListener("click", () => {
 
-    }, { once: true });
+        music.muted = false;
+
+        music.play();
+
+      }, { once: true });
+
+    });
 
   </script>
 
