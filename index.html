@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Happy Birthday My Love 🎀</title>
 
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
+
     *{
       margin:0;
       padding:0;
@@ -23,8 +23,6 @@
       overflow-x:hidden;
       color:#5c3a4a;
     }
-
-
 
     .heart{
       position:fixed;
@@ -48,8 +46,6 @@
         opacity:0;
       }
     }
-
-
 
     .hero{
       height:100vh;
@@ -94,8 +90,6 @@
       background:#ff5fa2;
     }
 
-
-
     section{
       padding:100px 10%;
       position:relative;
@@ -110,8 +104,6 @@
       font-family:'Dancing Script', cursive;
     }
 
-
-
     .typing-box{
       background:white;
       padding:40px;
@@ -121,8 +113,6 @@
       line-height:40px;
       text-align:center;
     }
-
-
 
     .gallery{
       display:grid;
@@ -155,8 +145,6 @@
       margin-top:10px;
     }
 
-
-
     .letter{
       background:white;
       padding:50px;
@@ -165,8 +153,6 @@
       font-size:20px;
       box-shadow:0 10px 30px rgba(0,0,0,0.08);
     }
-
-
 
     .surprise{
       text-align:center;
@@ -190,16 +176,12 @@
       }
     }
 
-
-
     footer{
       text-align:center;
       padding:40px;
       font-size:18px;
       color:#8b5d6e;
     }
-
-
 
     @media(max-width:768px){
 
@@ -227,27 +209,34 @@
 
 <body>
 
-
-  <audio autoplay loop>
+  <!-- MUSIC -->
+  <audio id="bgMusic" loop>
     <source src="shape of my heart.mp3" type="audio/mp3">
   </audio>
 
-
+  <!-- FLOATING HEARTS -->
   <script>
+
     for(let i=0; i<40; i++){
+
       const heart = document.createElement('div');
+
       heart.classList.add('heart');
+
       heart.innerHTML = '❤';
 
       heart.style.left = Math.random()*100 + 'vw';
+
       heart.style.fontSize = Math.random()*25 + 15 + 'px';
+
       heart.style.animationDuration = Math.random()*5 + 5 + 's';
 
       document.body.appendChild(heart);
     }
+
   </script>
 
-
+  <!-- HERO -->
   <section class="hero">
 
     <h1>Happy Birthday My Love 🎂</h1>
@@ -262,7 +251,7 @@
 
   </section>
 
-
+  <!-- TYPING -->
   <section id="typing">
 
     <h2 class="title">A Little Message 💌</h2>
@@ -273,7 +262,7 @@
 
   </section>
 
-
+  <!-- GALLERY -->
   <section>
 
     <h2 class="title">my beautiful girl 📸</h2>
@@ -299,7 +288,7 @@
 
   </section>
 
-
+  <!-- LETTER -->
   <section>
 
     <h2 class="title">For You ✨</h2>
@@ -318,15 +307,16 @@
       sehat terus, diberi banyak rezeki,
       dan semua impian kamu bisa tercapai. 🌷 <br><br>
 
-      Semoga semua usaha yang kamu lakukan merupakan potongan potongan kunci untuk mencapai hidup yang kita mimpikan. Aamiin yaa robbal alamiin <br><br>
+      Semoga semua usaha yang kamu lakukan merupakan potongan potongan kunci untuk mencapai hidup yang kita mimpikan.
+      Aamiin yaa robbal alamiin 💕 <br><br>
 
-      I love you soo much. My love is eternal for you 💕
+      I love you soo much. My love is eternal for you 💖
 
     </div>
 
   </section>
 
-
+  <!-- SURPRISE -->
   <section class="surprise">
 
     <h2 class="title">One More Thing 🎁</h2>
@@ -341,22 +331,24 @@
 
   </section>
 
-
+  <!-- FOOTER -->
   <footer>
     Made with love by sapi kesayanganmu 🎀
   </footer>
 
-
+  <!-- SCRIPT -->
   <script>
 
+    // SCROLL
     function scrollToSection(){
+
       document.getElementById('typing').scrollIntoView({
         behavior:'smooth'
       });
+
     }
 
- 
-
+    // TYPING EFFECT
     const message = [
       "hai bocil kesayanganku 💗",
       "ciekkk ciekkk udah ultah yang ke 17 🎂",
@@ -378,6 +370,7 @@
         if(char < message[line].length){
 
           text.innerHTML += message[line].charAt(char);
+
           char++;
 
           setTimeout(typeEffect, 70);
@@ -385,23 +378,23 @@
         }else{
 
           text.innerHTML += "<br><br>";
+
           line++;
+
           char = 0;
 
           setTimeout(typeEffect, 700);
+
         }
       }
     }
 
     typeEffect();
 
-
-
+    // SURPRISE
     function showLove(){
 
       document.getElementById("loveMessage").style.display = "block";
-
-
 
       for(let i=0; i<80; i++){
 
@@ -423,8 +416,7 @@
       }
     }
 
-
-
+    // CONFETTI ANIMATION
     const style = document.createElement('style');
 
     style.innerHTML = `
@@ -437,6 +429,15 @@
     `;
 
     document.head.appendChild(style);
+
+    // MUSIC PLAY
+    const music = document.getElementById("bgMusic");
+
+    document.body.addEventListener("click", () => {
+
+      music.play();
+
+    }, { once: true });
 
   </script>
 
