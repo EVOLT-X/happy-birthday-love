@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Happy Birthday 🎀</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
@@ -26,30 +26,35 @@
       background: var(--cream);
       color: var(--ink);
       overflow-x: hidden;
-      cursor: none;
     }
 
-    /* CUSTOM CURSOR */
-    .cursor {
-      position: fixed;
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: var(--rose);
-      pointer-events: none;
-      z-index: 9999;
-      transition: transform 0.15s ease;
-      transform: translate(-50%, -50%);
+    /* Custom cursor - desktop only */
+    @media (pointer: fine) {
+      body { cursor: none; }
+      .cursor {
+        position: fixed;
+        width: 10px; height: 10px;
+        border-radius: 50%;
+        background: var(--rose);
+        pointer-events: none;
+        z-index: 9999;
+        transition: transform 0.15s ease;
+        transform: translate(-50%, -50%);
+      }
+      .cursor-ring {
+        position: fixed;
+        width: 32px; height: 32px;
+        border-radius: 50%;
+        border: 1px solid var(--rose);
+        pointer-events: none;
+        z-index: 9998;
+        opacity: 0.5;
+        transition: transform 0.35s ease, width 0.2s, height 0.2s;
+        transform: translate(-50%, -50%);
+      }
     }
-    .cursor-ring {
-      position: fixed;
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      border: 1px solid var(--rose);
-      pointer-events: none;
-      z-index: 9998;
-      opacity: 0.5;
-      transition: transform 0.35s ease, width 0.2s, height 0.2s;
-      transform: translate(-50%, -50%);
+    @media (pointer: coarse) {
+      .cursor, .cursor-ring { display: none; }
     }
 
     /* PASSCODE SCREEN */
@@ -63,6 +68,7 @@
       align-items: center;
       justify-content: center;
       transition: opacity 0.8s ease, visibility 0.8s ease;
+      overflow: hidden;
     }
     #passcode-screen.hidden {
       opacity: 0;
@@ -76,9 +82,12 @@
     }
     .passcode-deco span {
       position: absolute;
-      font-size: 80px;
+      font-size: 60px;
       opacity: 0.07;
       animation: floatDeco 8s ease-in-out infinite;
+    }
+    @media (max-width: 480px) {
+      .passcode-deco span { font-size: 40px; }
     }
     @keyframes floatDeco {
       0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -88,11 +97,13 @@
       position: relative;
       z-index: 2;
       text-align: center;
-      padding: 40px;
+      padding: 24px 20px;
+      width: 100%;
+      max-width: 360px;
     }
     .passcode-lock {
-      font-size: 48px;
-      margin-bottom: 24px;
+      font-size: 40px;
+      margin-bottom: 16px;
       animation: pulse 2s ease-in-out infinite;
     }
     @keyframes pulse {
@@ -101,24 +112,25 @@
     }
     .passcode-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 36px;
+      font-size: clamp(24px, 6vw, 36px);
       color: #fdf0f3;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .passcode-hint {
-      font-size: 14px;
+      font-size: 13px;
       color: rgba(253,240,243,0.6);
-      margin-bottom: 40px;
+      margin-bottom: 28px;
       letter-spacing: 0.05em;
     }
     .passcode-dots {
       display: flex;
-      gap: 16px;
+      gap: 14px;
       justify-content: center;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
     }
     .passcode-dot {
-      width: 14px; height: 14px;
+      width: 13px; height: 13px;
       border-radius: 50%;
       border: 2px solid rgba(253,240,243,0.5);
       background: transparent;
@@ -141,7 +153,8 @@
     .passcode-numpad {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+      gap: 10px;
+      width: 100%;
       max-width: 280px;
       margin: 0 auto;
     }
@@ -150,19 +163,25 @@
       border: 1px solid rgba(253,240,243,0.2);
       color: #fdf0f3;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 26px;
-      width: 80px; height: 80px;
+      font-size: clamp(20px, 5vw, 26px);
+      width: 100%;
+      aspect-ratio: 1;
+      max-width: 80px;
+      max-height: 80px;
       border-radius: 50%;
       cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
       transition: background 0.15s, transform 0.1s;
       display: flex; align-items: center; justify-content: center;
+      margin: 0 auto;
     }
     .num-btn:hover { background: rgba(253,240,243,0.2); }
     .num-btn:active { transform: scale(0.93); background: rgba(253,240,243,0.3); }
-    .num-btn.del-btn { font-size: 20px; }
+    .num-btn.del-btn { font-size: 18px; }
     .num-btn.empty { visibility: hidden; }
     .passcode-error-msg {
-      margin-top: 20px;
+      margin-top: 16px;
       font-size: 13px;
       color: #ffb3c1;
       height: 20px;
@@ -187,7 +206,7 @@
       pointer-events: none;
     }
     .loader-heart {
-      font-size: 60px;
+      font-size: 56px;
       animation: heartbeat 1s ease-in-out infinite;
     }
     @keyframes heartbeat {
@@ -198,11 +217,11 @@
       70% { transform: scale(1); }
     }
     .loader-bar-wrap {
-      width: 200px;
+      width: min(200px, 60vw);
       height: 2px;
       background: var(--rose-light);
       border-radius: 2px;
-      margin-top: 30px;
+      margin-top: 28px;
       overflow: hidden;
     }
     .loader-bar {
@@ -213,7 +232,7 @@
       transition: width 0.1s linear;
     }
     .loader-text {
-      margin-top: 16px;
+      margin-top: 14px;
       font-size: 13px;
       color: var(--muted);
       letter-spacing: 0.08em;
@@ -231,7 +250,7 @@
       0% { transform: translateY(-10px) rotate(0deg) translateX(0); opacity: 0; }
       10% { opacity: 0.6; }
       90% { opacity: 0.4; }
-      100% { transform: translateY(100vh) rotate(720deg) translateX(60px); opacity: 0; }
+      100% { transform: translateY(100vh) rotate(720deg) translateX(40px); opacity: 0; }
     }
 
     /* MAIN CONTENT */
@@ -243,13 +262,13 @@
 
     /* HERO */
     .hero {
-      min-height: 100vh;
+      min-height: 100svh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 60px 20px;
+      padding: 60px 24px 80px;
       position: relative;
       overflow: hidden;
     }
@@ -261,19 +280,19 @@
         radial-gradient(ellipse 60% 40% at 80% 100%, rgba(200,99,126,0.08) 0%, transparent 60%);
     }
     .hero-date {
-      font-size: 12px;
+      font-size: 11px;
       letter-spacing: 0.3em;
       color: var(--muted);
       text-transform: uppercase;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       animation: fadeUp 1s ease 0.3s both;
     }
     .hero-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(56px, 10vw, 110px);
+      font-size: clamp(52px, 15vw, 110px);
       line-height: 0.95;
       color: var(--rose-deep);
-      margin-bottom: 12px;
+      margin-bottom: 16px;
       animation: fadeUp 1s ease 0.5s both;
     }
     .hero-title em {
@@ -281,48 +300,49 @@
       font-style: italic;
     }
     .hero-subtitle {
-      font-size: 16px;
+      font-size: clamp(14px, 3.5vw, 16px);
       color: var(--muted);
-      margin-bottom: 48px;
+      margin-bottom: 40px;
       font-weight: 300;
       animation: fadeUp 1s ease 0.7s both;
     }
     .hero-btn {
-      padding: 16px 48px;
+      padding: 16px 40px;
       background: var(--rose);
       color: white;
       border: none;
       font-family: 'Jost', sans-serif;
-      font-size: 14px;
+      font-size: 13px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       border-radius: 60px;
       cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
       transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
       animation: fadeUp 1s ease 0.9s both;
       box-shadow: 0 4px 24px rgba(200,99,126,0.3);
     }
-    .hero-btn:hover {
+    .hero-btn:active {
       background: var(--rose-deep);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(200,99,126,0.4);
+      transform: scale(0.97);
     }
     .hero-scroll {
       position: absolute;
-      bottom: 40px;
+      bottom: 28px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 8px;
       color: var(--muted);
-      font-size: 11px;
+      font-size: 10px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       animation: fadeUp 1s ease 1.2s both;
     }
     .scroll-line {
       width: 1px;
-      height: 40px;
+      height: 36px;
       background: linear-gradient(to bottom, var(--rose), transparent);
       animation: scrollLine 2s ease-in-out infinite;
     }
@@ -348,22 +368,25 @@
 
     /* SECTION BASE */
     .section {
-      padding: 100px 5%;
+      padding: 72px 5%;
       max-width: 1000px;
       margin: 0 auto;
     }
+    @media (max-width: 480px) {
+      .section { padding: 56px 5%; }
+    }
     .section-label {
-      font-size: 11px;
+      font-size: 10px;
       letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--rose);
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
     .section-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(40px, 6vw, 64px);
+      font-size: clamp(34px, 8vw, 64px);
       color: var(--rose-deep);
-      margin-bottom: 48px;
+      margin-bottom: 36px;
       line-height: 1.1;
     }
     .section-title em { font-style: italic; color: var(--rose); }
@@ -373,7 +396,7 @@
       display: flex;
       align-items: center;
       gap: 16px;
-      margin: 0 5% 0;
+      margin: 0 5%;
       opacity: 0.4;
     }
     .divider-line { flex: 1; height: 1px; background: var(--rose-light); }
@@ -384,32 +407,35 @@
       background: white;
       border: 1px solid var(--rose-light);
       border-radius: 24px;
-      padding: 52px 56px;
+      padding: 44px 48px;
       position: relative;
       overflow: hidden;
+    }
+    @media (max-width: 600px) {
+      .typing-card { padding: 32px 24px; border-radius: 18px; }
     }
     .typing-card::before {
       content: '\201C';
       position: absolute;
-      top: -20px; left: 24px;
+      top: -20px; left: 20px;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 160px;
+      font-size: 130px;
       color: var(--rose-light);
       line-height: 1;
       pointer-events: none;
     }
     .typing-text {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 28px;
+      font-size: clamp(20px, 5vw, 28px);
       line-height: 1.8;
       color: var(--ink);
-      min-height: 200px;
+      min-height: 160px;
       position: relative;
       z-index: 1;
     }
     .cursor-blink {
       display: inline-block;
-      width: 2px; height: 28px;
+      width: 2px; height: 24px;
       background: var(--rose);
       margin-left: 2px;
       vertical-align: middle;
@@ -424,7 +450,15 @@
     .gallery {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 16px;
+    }
+    @media (max-width: 700px) {
+      .gallery {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        max-width: 400px;
+        margin: 0 auto;
+      }
     }
     .photo-card {
       background: white;
@@ -433,23 +467,25 @@
       overflow: hidden;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
-    .photo-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 15px 35px rgba(255, 95, 162, 0.2);
+    @media (hover: hover) {
+      .photo-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(255, 95, 162, 0.2);
+      }
     }
-
     .photo-card img {
       width: 100%;
-      height: 320px;
+      height: clamp(200px, 40vw, 320px);
       object-fit: cover;
       display: block;
     }
-
+    @media (max-width: 700px) {
+      .photo-card img { height: 260px; }
+    }
     .photo-caption {
-      padding: 15px;
+      padding: 14px;
       text-align: center;
-      font-size: 15px;
+      font-size: clamp(13px, 3.5vw, 15px);
       color: #5c3a4a;
       background: white;
     }
@@ -459,30 +495,33 @@
       background: white;
       border: 1px solid var(--rose-light);
       border-radius: 24px;
-      padding: 60px;
+      padding: 52px 56px;
       position: relative;
+    }
+    @media (max-width: 600px) {
+      .letter-card { padding: 32px 24px; border-radius: 18px; }
     }
     .letter-card::after {
       content: '';
       position: absolute;
-      top: 0; left: 60px; right: 60px;
+      top: 0; left: 40px; right: 40px;
       height: 2px;
       background: linear-gradient(to right, transparent, var(--rose-light), transparent);
     }
     .letter-body {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
+      font-size: clamp(18px, 4.5vw, 22px);
       line-height: 2;
       color: var(--ink);
     }
     .letter-body strong { color: var(--rose); font-weight: 600; }
     .letter-sig {
-      margin-top: 40px;
-      padding-top: 24px;
+      margin-top: 32px;
+      padding-top: 20px;
       border-top: 1px solid var(--rose-light);
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: 20px;
+      font-size: clamp(16px, 4vw, 20px);
       color: var(--muted);
       display: flex;
       align-items: center;
@@ -492,15 +531,18 @@
     /* SURPRISE */
     .surprise-wrap {
       text-align: center;
-      padding: 100px 20px;
+      padding: 80px 20px;
     }
     .surprise-btn {
-      width: 140px; height: 140px;
+      width: clamp(100px, 30vw, 140px);
+      height: clamp(100px, 30vw, 140px);
       border-radius: 50%;
       border: 2px solid var(--rose-light);
       background: white;
-      font-size: 48px;
+      font-size: clamp(36px, 10vw, 48px);
       cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
       transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
       display: inline-flex; align-items: center; justify-content: center;
       animation: gentlePulse 3s ease-in-out infinite;
@@ -509,18 +551,22 @@
       0%, 100% { box-shadow: 0 0 0 0 rgba(200,99,126,0.3); }
       50% { box-shadow: 0 0 0 20px rgba(200,99,126,0); }
     }
-    .surprise-btn:hover {
-      transform: scale(1.08);
-      border-color: var(--rose);
-      box-shadow: 0 12px 40px rgba(200,99,126,0.25);
+    @media (hover: hover) {
+      .surprise-btn:hover {
+        transform: scale(1.08);
+        border-color: var(--rose);
+        box-shadow: 0 12px 40px rgba(200,99,126,0.25);
+      }
     }
+    .surprise-btn:active { transform: scale(0.95); }
     .love-message {
-      margin-top: 40px;
+      margin-top: 36px;
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(40px, 8vw, 80px);
+      font-size: clamp(32px, 10vw, 80px);
       color: var(--rose);
       display: none;
       animation: messageReveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      line-height: 1.2;
     }
     @keyframes messageReveal {
       from { opacity: 0; transform: scale(0.5); }
@@ -528,17 +574,17 @@
     }
     .love-sub {
       display: none;
-      margin-top: 16px;
-      font-size: 16px;
+      margin-top: 14px;
+      font-size: clamp(14px, 4vw, 16px);
       color: var(--muted);
       animation: fadeUp 0.8s ease 0.4s both;
     }
 
-    /* CONFETTI PIECE */
+    /* CONFETTI */
     .confetti-piece {
       position: fixed;
       top: -20px;
-      font-size: 20px;
+      font-size: clamp(14px, 4vw, 20px);
       animation: confettiFall linear forwards;
       pointer-events: none;
       z-index: 9000;
@@ -552,18 +598,18 @@
     /* FOOTER */
     footer {
       text-align: center;
-      padding: 60px 20px;
+      padding: 52px 20px;
       border-top: 1px solid var(--rose-light);
     }
     .footer-heart {
-      font-size: 24px;
+      font-size: 22px;
       display: block;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       animation: heartbeat 1.5s ease-in-out infinite;
     }
     .footer-text {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
+      font-size: clamp(16px, 4vw, 20px);
       color: var(--muted);
       font-style: italic;
     }
@@ -571,32 +617,44 @@
     /* MUSIC BAR */
     .music-bar {
       position: fixed;
-      bottom: 24px; right: 24px;
+      bottom: 20px; right: 16px;
       background: white;
       border: 1px solid var(--rose-light);
       border-radius: 40px;
-      padding: 10px 20px 10px 14px;
+      padding: 10px 16px 10px 12px;
       display: flex;
       align-items: center;
-      gap: 10px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      gap: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
       z-index: 100;
       cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
       transition: transform 0.2s;
-      font-size: 13px;
+      font-size: 12px;
       color: var(--muted);
+      max-width: calc(100vw - 32px);
     }
-    .music-bar:hover { transform: scale(1.04); }
-    .music-icon { font-size: 18px; animation: spinNote 3s linear infinite; }
+    .music-bar:active { transform: scale(0.96); }
+    .music-icon { font-size: 16px; animation: spinNote 3s linear infinite; flex-shrink: 0; }
     @keyframes spinNote {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
+    }
+    .music-title {
+      color: var(--rose-deep);
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 120px;
     }
     .music-bars {
       display: flex;
       gap: 2px;
       align-items: flex-end;
-      height: 16px;
+      height: 14px;
+      flex-shrink: 0;
     }
     .music-bars span {
       display: block;
@@ -605,24 +663,15 @@
       border-radius: 2px;
       animation: barDance 0.8s ease-in-out infinite alternate;
     }
-    .music-bars span:nth-child(1) { height: 6px; animation-delay: 0s; }
-    .music-bars span:nth-child(2) { height: 12px; animation-delay: 0.2s; }
-    .music-bars span:nth-child(3) { height: 8px; animation-delay: 0.1s; }
-    .music-bars span:nth-child(4) { height: 14px; animation-delay: 0.3s; }
+    .music-bars span:nth-child(1) { height: 5px; animation-delay: 0s; }
+    .music-bars span:nth-child(2) { height: 11px; animation-delay: 0.2s; }
+    .music-bars span:nth-child(3) { height: 7px; animation-delay: 0.1s; }
+    .music-bars span:nth-child(4) { height: 13px; animation-delay: 0.3s; }
     @keyframes barDance {
       from { transform: scaleY(0.4); }
       to { transform: scaleY(1); }
     }
     .music-bars.paused span { animation-play-state: paused; }
-
-    /* RESPONSIVE */
-    @media(max-width: 768px) {
-      .typing-card { padding: 32px 28px; }
-      .letter-card { padding: 36px 28px; }
-      .gallery { grid-template-columns: 1fr; }
-      .photo-card:nth-child(2) { transform: none; }
-      .music-bar { bottom: 16px; right: 16px; }
-    }
   </style>
 </head>
 <body>
@@ -696,23 +745,15 @@
     <div class="gallery">
       <div class="photo-card reveal">
         <img src="photo1.jpeg" alt="Photo 1">
-        <div class="photo-caption">
-          My favorite person 🌷
-        </div>
+        <div class="photo-caption">My favorite person 🌷</div>
       </div>
-
       <div class="photo-card reveal" style="transition-delay:0.1s">
         <img src="photo2.jpeg" alt="Photo 2">
-        <div class="photo-caption">
-          Thank you for everything 💕
-        </div>
+        <div class="photo-caption">Thank you for everything 💕</div>
       </div>
-
       <div class="photo-card reveal" style="transition-delay:0.2s">
         <img src="photo3.jpeg" alt="Photo 3">
-        <div class="photo-caption">
-          You make my days better 🎀
-        </div>
+        <div class="photo-caption">You make my days better 🎀</div>
       </div>
     </div>
   </div>
@@ -753,8 +794,8 @@
   <!-- SURPRISE -->
   <div class="surprise-wrap">
     <div class="reveal">
-      <p class="section-label" style="margin-bottom:24px">satu hal lagi</p>
-      <h2 class="section-title" style="margin-bottom:40px">One More <em>Thing</em> 🎁</h2>
+      <p class="section-label" style="margin-bottom:20px">satu hal lagi</p>
+      <h2 class="section-title" style="margin-bottom:36px">One More <em>Thing</em> 🎁</h2>
     </div>
     <button class="surprise-btn reveal" onclick="showLove()">💖</button>
     <div class="love-message" id="loveMessage">I Love You So Much</div>
@@ -767,7 +808,7 @@
     <p class="footer-text">Made with love by sapi kesayanganmu 🎀</p>
   </footer>
 
-</div><!-- end main-content -->
+</div>
 
 <!-- MUSIC -->
 <audio id="bgMusic" loop>
@@ -775,63 +816,59 @@
 </audio>
 <div class="music-bar" id="musicBar" onclick="toggleMusic()">
   <span class="music-icon">♪</span>
-  <span style="color:var(--rose-deep);font-size:13px;">Shape of My Heart</span>
+  <span class="music-title">Shape of My Heart</span>
   <div class="music-bars" id="musicBars">
     <span></span><span></span><span></span><span></span>
   </div>
 </div>
 
 <script>
-
-  // CUSTOM CURSOR
+  // CUSTOM CURSOR (desktop only)
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top = my + 'px';
-  });
-  (function animateRing(){
-    rx += (mx - rx) * 0.15;
-    ry += (my - ry) * 0.15;
-    ring.style.left = rx + 'px';
-    ring.style.top = ry + 'px';
-    requestAnimationFrame(animateRing);
-  })();
+  if (window.matchMedia('(pointer: fine)').matches) {
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    });
+    (function animateRing(){
+      rx += (mx - rx) * 0.15;
+      ry += (my - ry) * 0.15;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateRing);
+    })();
+  }
 
   // PASSCODE SETUP
-  // Ganti angka di bawah dengan tanggal jadian Format: DDMMYYYY
-  const CORRECT_CODE = '06062023'; // ← GANTI INI
-
+  const CORRECT_CODE = '06062023'; // ← GANTI INI (format DDMMYYYY)
   const TOTAL_DIGITS = CORRECT_CODE.length;
   let inputCode = '';
 
-  // Deco emojis
   const decoEmojis = ['💗','🌷','✨','💕','🎀','💖','🌸','💝'];
   const decoLayer = document.getElementById('passcodeDecoLayer');
   decoEmojis.forEach((e, i) => {
     const s = document.createElement('span');
     s.textContent = e;
-    s.style.cssText = `left:${Math.random()*90+5}%;top:${Math.random()*90+5}%;animation-delay:${i*0.8}s;animation-duration:${6+i}s`;
+    s.style.cssText = `left:${Math.random()*85+5}%;top:${Math.random()*85+5}%;animation-delay:${i*0.8}s;animation-duration:${6+i}s`;
     decoLayer.appendChild(s);
   });
 
-  // Build dots
   const dotsEl = document.getElementById('passcodeDots');
-  for(let i=0;i<TOTAL_DIGITS;i++){
+  for(let i = 0; i < TOTAL_DIGITS; i++){
     const d = document.createElement('div');
     d.className = 'passcode-dot';
-    d.id = 'dot'+i;
+    d.id = 'dot' + i;
     dotsEl.appendChild(d);
   }
 
-  // Build numpad
   const numpad = document.getElementById('numpad');
   const keys = ['1','2','3','4','5','6','7','8','9','','0','⌫'];
   keys.forEach(k => {
     const btn = document.createElement('button');
-    btn.className = 'num-btn' + (k==='' ? ' empty' : '') + (k==='⌫' ? ' del-btn' : '');
+    btn.className = 'num-btn' + (k === '' ? ' empty' : '') + (k === '⌫' ? ' del-btn' : '');
     btn.textContent = k;
     if(k !== '') btn.onclick = () => handleKey(k);
     numpad.appendChild(btn);
@@ -840,14 +877,14 @@
   function handleKey(k){
     if(k === '⌫'){
       if(inputCode.length > 0){
-        inputCode = inputCode.slice(0,-1);
-        document.getElementById('dot'+(inputCode.length)).classList.remove('filled');
+        inputCode = inputCode.slice(0, -1);
+        document.getElementById('dot' + inputCode.length).classList.remove('filled');
       }
       return;
     }
     if(inputCode.length >= TOTAL_DIGITS) return;
     inputCode += k;
-    document.getElementById('dot'+(inputCode.length-1)).classList.add('filled');
+    document.getElementById('dot' + (inputCode.length - 1)).classList.add('filled');
     if(inputCode.length === TOTAL_DIGITS) checkCode();
   }
 
@@ -856,15 +893,15 @@
       document.getElementById('passcode-screen').classList.add('hidden');
       startLoading();
     } else {
-      for(let i=0;i<TOTAL_DIGITS;i++){
-        const d = document.getElementById('dot'+i);
+      for(let i = 0; i < TOTAL_DIGITS; i++){
+        const d = document.getElementById('dot' + i);
         d.classList.remove('filled');
         d.classList.add('error');
       }
       document.getElementById('errorMsg').textContent = 'Passcode salah, coba lagi sayang 💗';
-      setTimeout(()=>{
-        for(let i=0;i<TOTAL_DIGITS;i++){
-          document.getElementById('dot'+i).classList.remove('error');
+      setTimeout(() => {
+        for(let i = 0; i < TOTAL_DIGITS; i++){
+          document.getElementById('dot' + i).classList.remove('error');
         }
         document.getElementById('errorMsg').textContent = '';
         inputCode = '';
@@ -872,24 +909,23 @@
     }
   }
 
-  // keyboard support
   document.addEventListener('keydown', e => {
     if(document.getElementById('passcode-screen').classList.contains('hidden')) return;
     if(e.key >= '0' && e.key <= '9') handleKey(e.key);
     if(e.key === 'Backspace') handleKey('⌫');
   });
 
-  // LOADING SCREEN
+  // LOADING
   function startLoading(){
     const bar = document.getElementById('loaderBar');
     let pct = 0;
-    const iv = setInterval(()=>{
+    const iv = setInterval(() => {
       pct += Math.random() * 12 + 3;
       if(pct >= 100){
         pct = 100;
         bar.style.width = '100%';
         clearInterval(iv);
-        setTimeout(()=>{
+        setTimeout(() => {
           document.getElementById('loading-screen').classList.add('hidden');
           document.getElementById('main-content').classList.add('visible');
           initPetals();
@@ -903,16 +939,17 @@
     }, 120);
   }
 
-  // FLOATING PETALS
+  // PETALS
   function initPetals(){
     const symbols = ['✿','❀','✾','❁','♡','✦'];
-    for(let i=0;i<20;i++){
+    const count = window.innerWidth < 480 ? 10 : 20;
+    for(let i = 0; i < count; i++){
       const p = document.createElement('div');
       p.className = 'petal';
-      p.textContent = symbols[Math.floor(Math.random()*symbols.length)];
+      p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
       p.style.cssText = `
         left:${Math.random()*100}vw;
-        font-size:${Math.random()*14+8}px;
+        font-size:${Math.random()*12+7}px;
         color:${Math.random()>0.5?'#c8637e':'#d4899a'};
         animation-duration:${Math.random()*8+6}s;
         animation-delay:${Math.random()*8}s;
@@ -921,7 +958,7 @@
     }
   }
 
-  // TYPING EFFECT
+  // TYPING
   const messages = [
     "hai bocil kesayanganku 💗",
     "ciekkk ciekkk udah ultah yang ke 17 🎂",
@@ -951,17 +988,15 @@
     }
   }
 
-
   // SCROLL REVEAL
   function observeReveal(){
-    const obs = new IntersectionObserver((entries)=>{
+    const obs = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if(e.isIntersecting) e.target.classList.add('visible');
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   }
-
 
   // SURPRISE
   function showLove(){
@@ -974,23 +1009,23 @@
 
   function launchConfetti(){
     const emojis = ['🎀','💖','🌷','✨','💕','🌸','💗','🎊'];
-    for(let i=0;i<80;i++){
-      setTimeout(()=>{
+    const count = window.innerWidth < 480 ? 40 : 80;
+    for(let i = 0; i < count; i++){
+      setTimeout(() => {
         const c = document.createElement('div');
         c.className = 'confetti-piece';
-        c.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+        c.textContent = emojis[Math.floor(Math.random() * emojis.length)];
         c.style.cssText = `
           left:${Math.random()*100}vw;
-          font-size:${Math.random()*18+12}px;
+          font-size:${Math.random()*16+10}px;
           animation-duration:${Math.random()*2+2.5}s;
           animation-delay:${Math.random()*0.5}s;
         `;
         document.body.appendChild(c);
-        setTimeout(()=>c.remove(), 4000);
+        setTimeout(() => c.remove(), 4000);
       }, i * 40);
     }
   }
-
 
   // MUSIC
   const music = document.getElementById('bgMusic');
@@ -998,16 +1033,27 @@
 
   function tryAutoplay(){
     music.volume = 0.6;
-    music.play().then(()=>{ musicPlaying = true; }).catch(()=>{});
+    music.play().then(() => { musicPlaying = true; }).catch(() => {});
   }
 
   function toggleMusic(){
-    if(musicPlaying){ music.pause(); musicPlaying = false; document.getElementById('musicBars').classList.add('paused'); }
-    else { music.play(); musicPlaying = true; document.getElementById('musicBars').classList.remove('paused'); }
+    if(musicPlaying){
+      music.pause();
+      musicPlaying = false;
+      document.getElementById('musicBars').classList.add('paused');
+    } else {
+      music.play();
+      musicPlaying = true;
+      document.getElementById('musicBars').classList.remove('paused');
+    }
   }
 
-  document.body.addEventListener('click', ()=>{
-    if(!musicPlaying){ music.play().then(()=>{ musicPlaying = true; document.getElementById('musicBars').classList.remove('paused'); }).catch(()=>{}); }
+  document.body.addEventListener('click', () => {
+    if(!musicPlaying){
+      music.play()
+        .then(() => { musicPlaying = true; document.getElementById('musicBars').classList.remove('paused'); })
+        .catch(() => {});
+    }
   }, { once: true });
 </script>
 </body>
